@@ -1,0 +1,40 @@
+users/create - json body
+users/read
+users/read/{id}
+users/update/{id} - json body
+users/delete/{id}
+
+usermeta/create - json body
+usermeta/read
+usermeta/read/{id}
+usermeta/read/{user_id}
+usermeta/read/is - json body
+usermeta/read/like - json body
+usermeta/update/{id} - json body
+usermeta/delete/{id}
+usermeta/delete/{user_id}
+
+actions/create - json body
+actions/read
+actions/read/{id}
+actions/read/{user_id}
+actions/update/{id} - json body
+actions/delete/{id}
+actions/delete/{user_id}
+
+events/create - json body
+events/read
+events/read/{id}
+events/read/{action_id}
+events/read/range - json body
+events/update/{id} - json body
+events/delete/{id}
+
+responses/create - json body
+responses/read
+responses/read/{id}
+responses/read/{event_id}
+responses/read/{user_id}
+responses/delete/{id}
+responses/delete/{event_id}
+responses/delete/{user_id}
