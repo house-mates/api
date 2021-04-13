@@ -15,3 +15,12 @@ func FindUsers(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"data": users})
 }
+
+// GET /users/:id
+// Get a user by id
+func FindUser(c *gin.Context) {
+	var user models.User
+	models.DB.First(&user, c.Param("id"))
+
+	c.JSON(http.StatusOK, gin.H{"data": user})
+}
