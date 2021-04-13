@@ -3,8 +3,6 @@ package models
 import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-
-	"github.com/house-mates/api/src/models"
 )
 
 var DB *gorm.DB
@@ -19,11 +17,11 @@ func ConnectDataBase() {
 	}
 
 	database.AutoMigrate(
-		&models.User{},
-		&models.Usermeta{},
-		&models.Action{},
-		&models.Event{},
-		&models.Response{},
+		&User{},
+		&Usermeta{},
+		&Action{},
+		&Event{},
+		&Response{},
 	)
 
 	DB = database
