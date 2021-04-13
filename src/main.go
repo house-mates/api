@@ -13,6 +13,7 @@ func main() {
 	models.ConnectDataBase()
 
 	r.GET("/users", controllers.FindUsers)
+	r.GET("/users/:id", controllers.FindUser)
 
 	r.Run()
 }
