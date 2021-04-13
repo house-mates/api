@@ -4,7 +4,7 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 
-	"github.com/house-mates/api/src/models/models"
+	"github.com/house-mates/api/src/models"
 )
 
 var DB *gorm.DB
