@@ -1,8 +1,8 @@
-users/create - json body
-users/read
-users/read/{id}
-users/update/{id} - json body
-users/delete/{id}
+users POST - json body
+users GET
+users/{id} GET
+users/{id} PATCH - json body
+users/{id} DELETE
 
 usermeta/create - json body
 usermeta/read
