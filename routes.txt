@@ -1,18 +1,16 @@
-users POST - json body
 users GET
 users/{id} GET
+users POST - json body
 users/{id} PATCH - json body
 users/{id} DELETE
 
-usermeta/create - json body
-usermeta/read
-usermeta/read/{id}
-usermeta/read/{user_id}
-usermeta/read/is - json body
-usermeta/read/like - json body
-usermeta/update/{id} - json body
-usermeta/delete/{id}
-usermeta/delete/{user_id}
+usermeta POST - json body
+usermeta GET
+usermeta/{id} GET
+usermeta/{user_id} GET
+usermeta/{id} PATCH - json body
+usermeta/{id} DELETE
+usermeta/{user_id} DELETE
 
 actions/create - json body
 actions/read

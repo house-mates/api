@@ -1,4 +1,4 @@
-package main
+package helpers
 
 import (
 	"strconv"
@@ -13,4 +13,8 @@ func GrabIDParamAndConvertToUInt(c *gin.Context) uint {
 	}
 
 	return uint(intValue)
+}
+
+func NotFoundResponse() gin.H {
+	return gin.H{"data": "no results"}
 }
