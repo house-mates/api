@@ -1,38 +1,38 @@
 users GET
-users/{id} GET
+users/:id GET
 users POST - json body
-users/{id} PATCH - json body
-users/{id} DELETE
+users/:id PATCH - json body
+users/:id DELETE
 
 usermeta POST - json body
 usermeta GET
-usermeta/{id} GET
-usermeta/{user_id} GET
-usermeta/{id} PATCH - json body
-usermeta/{id} DELETE
-usermeta/{user_id} DELETE
+usermeta/:id GET
+usermeta_by_uid/:user_id GET
+usermeta/:id PATCH - json body
+usermeta/:id DELETE
+usermeta_by_uid/:user_id DELETE
 
 actions/create - json body
 actions/read
-actions/read/{id}
+actions/read/:id
 actions/read/{user_id}
-actions/update/{id} - json body
-actions/delete/{id}
+actions/update/:id - json body
+actions/delete/:id
 actions/delete/{user_id}
 
 events/create - json body
 events/read
-events/read/{id}
+events/read/:id
 events/read/{action_id}
 events/read/range - json body
-events/update/{id} - json body
-events/delete/{id}
+events/update/:id - json body
+events/delete/:id
 
 responses/create - json body
 responses/read
-responses/read/{id}
+responses/read/:id
 responses/read/{event_id}
 responses/read/{user_id}
-responses/delete/{id}
+responses/delete/:id
 responses/delete/{event_id}
 responses/delete/{user_id}

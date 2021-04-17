@@ -16,10 +16,14 @@ func AddUser(c *gin.Context) {
 	result := models.DB.Create(&user)
 
 	if result.Error != nil {
-		panic(result.Error)
+		c.JSON(http.StatusBadRequest, helpers.BadRequest())
+		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": user})
+	c.JSON(http.StatusOK, gin.H{"data": helpers.Results{
+		Count:   1,
+		Results: user,
+	}})
 }
 
 // GET /users
@@ -28,7 +32,10 @@ func FindUsers(c *gin.Context) {
 	var users []models.User
 	models.DB.Find(&users)
 
-	c.JSON(http.StatusOK, gin.H{"data": users})
+	c.JSON(http.StatusOK, gin.H{"data": helpers.Results{
+		Count:   len(users),
+		Results: users,
+	}})
 }
 
 // GET /users/:id
@@ -38,11 +45,14 @@ func FindUser(c *gin.Context) {
 	models.DB.First(&user, c.Param("id"))
 
 	if user.ID == 0 {
-		c.JSON(http.StatusOK, helpers.NotFoundResponse())
+		c.JSON(http.StatusOK, helpers.NoResults())
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": user})
+	c.JSON(http.StatusOK, gin.H{"data": helpers.Results{
+		Count:   1,
+		Results: user,
+	}})
 }
 
 // PATCH /users/:id
@@ -55,10 +65,14 @@ func EditUser(c *gin.Context) {
 	result := models.DB.Save(&user)
 
 	if result.Error != nil {
-		panic(result.Error)
+		c.JSON(http.StatusBadRequest, helpers.BadRequest())
+		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": user})
+	c.JSON(http.StatusOK, gin.H{"data": helpers.Results{
+		Count:   1,
+		Results: user,
+	}})
 }
 
 // DELETE /users/:id
@@ -69,6 +83,11 @@ func DeleteUser(c *gin.Context) {
 	}
 
 	models.DB.First(&user)
+
+	if user.Nickname == "" {
+		c.JSON(http.StatusOK, helpers.NoResults())
+		return
+	}
 
 	models.DB.Delete(&user)
 

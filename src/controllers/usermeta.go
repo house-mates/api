@@ -16,10 +16,14 @@ func AddUsermeta(c *gin.Context) {
 	result := models.DB.Create(&usermeta)
 
 	if result.Error != nil {
-		panic(result.Error)
+		c.JSON(http.StatusBadRequest, helpers.BadRequest())
+		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": usermeta})
+	c.JSON(http.StatusOK, gin.H{"data": helpers.Results{
+		Count:   1,
+		Results: usermeta,
+	}})
 }
 
 // GET /usermeta
@@ -28,7 +32,10 @@ func FindUsermeta(c *gin.Context) {
 	var usermeta []models.Usermeta
 	models.DB.Find(&usermeta)
 
-	c.JSON(http.StatusOK, gin.H{"data": usermeta})
+	c.JSON(http.StatusOK, gin.H{"data": helpers.Results{
+		Count:   len(usermeta),
+		Results: usermeta,
+	}})
 }
 
 // GET /usermeta/:id
@@ -38,25 +45,26 @@ func FindUsermetaByID(c *gin.Context) {
 	models.DB.First(&usermeta, c.Param("id"))
 
 	if usermeta.ID == 0 {
-		c.JSON(http.StatusOK, helpers.NotFoundResponse())
+		c.JSON(http.StatusOK, helpers.NoResults())
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": usermeta})
+	c.JSON(http.StatusOK, gin.H{"data": helpers.Results{
+		Count:   1,
+		Results: usermeta,
+	}})
 }
 
 // GET /usermeta_by_uid/:user_id
 // Get usermeta by user id
 func FindUsermetaByUserID(c *gin.Context) {
-	var usermeta models.Usermeta
-	models.DB.First(&usermeta, "user_id = ?", c.Param("user_id"))
+	var usermeta []models.Usermeta
+	models.DB.Find(&usermeta, "user_id = ?", c.Param("user_id"))
 
-	if usermeta.ID == 0 {
-		c.JSON(http.StatusOK, helpers.NotFoundResponse())
-		return
-	}
-
-	c.JSON(http.StatusOK, gin.H{"data": usermeta})
+	c.JSON(http.StatusOK, gin.H{"data": helpers.Results{
+		Count:   len(usermeta),
+		Results: usermeta,
+	}})
 }
 
 // PATCH /usermeta/:id
@@ -69,10 +77,14 @@ func EditUsermeta(c *gin.Context) {
 	result := models.DB.Save(&usermeta)
 
 	if result.Error != nil {
-		panic(result.Error)
+		c.JSON(http.StatusBadRequest, helpers.BadRequest())
+		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": usermeta})
+	c.JSON(http.StatusOK, gin.H{"data": helpers.Results{
+		Count:   1,
+		Results: usermeta,
+	}})
 }
 
 // DELETE /usermeta/:id
@@ -84,7 +96,35 @@ func DeleteUsermeta(c *gin.Context) {
 
 	models.DB.First(&usermeta)
 
+	if usermeta.UserID == 0 {
+		c.JSON(http.StatusOK, helpers.NoResults())
+		return
+	}
+
 	models.DB.Delete(&usermeta)
 
-	c.JSON(http.StatusOK, gin.H{"data": usermeta})
+	c.JSON(http.StatusOK, gin.H{"data": helpers.Results{
+		Count:   1,
+		Results: usermeta,
+	}})
+}
+
+// DELETE /usermeta_by_uid/:user_id
+// Delete usermeta by user id
+func DeleteUsermetaByUserID(c *gin.Context) {
+	var usermeta = []models.Usermeta{}
+
+	models.DB.Find(&usermeta, "user_id = ?", c.Param("user_id"))
+
+	if len(usermeta) == 0 {
+		c.JSON(http.StatusOK, helpers.NoResults())
+		return
+	}
+
+	models.DB.Exec("DELETE FROM usermeta WHERE user_id = ?", c.Param("user_id"))
+
+	c.JSON(http.StatusOK, gin.H{"data": helpers.Results{
+		Count:   len(usermeta),
+		Results: usermeta,
+	}})
 }

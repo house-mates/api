@@ -15,6 +15,15 @@ func GrabIDParamAndConvertToUInt(c *gin.Context) uint {
 	return uint(intValue)
 }
 
-func NotFoundResponse() gin.H {
-	return gin.H{"data": "no results"}
+func NoResults() gin.H {
+	return gin.H{"data": Results{}}
+}
+
+func BadRequest() gin.H {
+	return gin.H{"data": "Bad Request"}
+}
+
+type Results struct {
+	Count   int         `json:"count"`
+	Results interface{} `json:"results"`
 }

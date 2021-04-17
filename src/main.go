@@ -24,6 +24,7 @@ func main() {
 	r.GET("/usermeta_by_uid/:user_id", controllers.FindUsermetaByUserID)
 	r.PATCH("/usermeta/:id", controllers.EditUsermeta)
 	r.DELETE("/usermeta/:id", controllers.DeleteUsermeta)
+	r.DELETE("/usermeta_by_uid/:user_id", controllers.DeleteUsermetaByUserID)
 
 	r.Run()
 }
