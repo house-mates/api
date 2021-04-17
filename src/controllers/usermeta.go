@@ -30,7 +30,12 @@ func AddUsermeta(c *gin.Context) {
 // Get all usermeta
 func FindUsermeta(c *gin.Context) {
 	var usermeta []models.Usermeta
-	models.DB.Find(&usermeta)
+	result := models.DB.Find(&usermeta)
+
+	if result.RowsAffected == 0 {
+		c.JSON(http.StatusOK, helpers.NoResults())
+		return
+	}
 
 	c.JSON(http.StatusOK, gin.H{"data": helpers.Results{
 		Count:   len(usermeta),
@@ -42,9 +47,9 @@ func FindUsermeta(c *gin.Context) {
 // Get usermeta by id
 func FindUsermetaByID(c *gin.Context) {
 	var usermeta models.Usermeta
-	models.DB.First(&usermeta, c.Param("id"))
+	result := models.DB.First(&usermeta, c.Param("id"))
 
-	if usermeta.ID == 0 {
+	if result.RowsAffected == 0 {
 		c.JSON(http.StatusOK, helpers.NoResults())
 		return
 	}
@@ -59,7 +64,12 @@ func FindUsermetaByID(c *gin.Context) {
 // Get usermeta by user id
 func FindUsermetaByUserID(c *gin.Context) {
 	var usermeta []models.Usermeta
-	models.DB.Find(&usermeta, "user_id = ?", c.Param("user_id"))
+	result := models.DB.Find(&usermeta, "user_id = ?", c.Param("user_id"))
+
+	if result.RowsAffected == 0 {
+		c.JSON(http.StatusOK, helpers.NoResults())
+		return
+	}
 
 	c.JSON(http.StatusOK, gin.H{"data": helpers.Results{
 		Count:   len(usermeta),
@@ -75,6 +85,8 @@ func EditUsermeta(c *gin.Context) {
 	usermeta.ID = helpers.GrabIDParamAndConvertToUInt(c)
 
 	result := models.DB.Save(&usermeta)
+
+	// Patch does not care whether rows rows were affected or not.
 
 	if result.Error != nil {
 		c.JSON(http.StatusBadRequest, helpers.BadRequest())
@@ -94,7 +106,12 @@ func DeleteUsermeta(c *gin.Context) {
 		ID: helpers.GrabIDParamAndConvertToUInt(c),
 	}
 
-	models.DB.First(&usermeta)
+	result := models.DB.First(&usermeta)
+
+	if result.RowsAffected == 0 {
+		c.JSON(http.StatusOK, helpers.NoResults())
+		return
+	}
 
 	if usermeta.UserID == 0 {
 		c.JSON(http.StatusOK, helpers.NoResults())
@@ -114,9 +131,9 @@ func DeleteUsermeta(c *gin.Context) {
 func DeleteUsermetaByUserID(c *gin.Context) {
 	var usermeta = []models.Usermeta{}
 
-	models.DB.Find(&usermeta, "user_id = ?", c.Param("user_id"))
+	result := models.DB.Find(&usermeta, "user_id = ?", c.Param("user_id"))
 
-	if len(usermeta) == 0 {
+	if result.RowsAffected == 0 {
 		c.JSON(http.StatusOK, helpers.NoResults())
 		return
 	}

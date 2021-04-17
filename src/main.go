@@ -26,5 +26,13 @@ func main() {
 	r.DELETE("/usermeta/:id", controllers.DeleteUsermeta)
 	r.DELETE("/usermeta_by_uid/:user_id", controllers.DeleteUsermetaByUserID)
 
+	r.POST("/actions", controllers.AddAction)
+	r.GET("/actions", controllers.FindActions)
+	r.GET("/actions/:id", controllers.FindAction)
+	r.GET("/actions_by_uid/:user_id", controllers.FindActionByUserID)
+	r.PATCH("/actions/:id", controllers.EditAction)
+	r.DELETE("/actions/:id", controllers.DeleteAction)
+	r.DELETE("/actions_by_uid/:user_id", controllers.DeleteActionsByUserID)
+
 	r.Run()
 }

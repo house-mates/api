@@ -12,13 +12,13 @@ usermeta/:id PATCH - json body
 usermeta/:id DELETE
 usermeta_by_uid/:user_id DELETE
 
-actions/create - json body
-actions/read
-actions/read/:id
-actions/read/{user_id}
-actions/update/:id - json body
-actions/delete/:id
-actions/delete/{user_id}
+actions POST - json body
+actions GET
+actions/:id GET
+actions_by_uid/:user_id GET
+actions/:id PATCH - json body
+actions/:id DELETE
+actions_by_uid/:user_id DELETE
 
 events/create - json body
 events/read

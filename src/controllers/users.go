@@ -30,7 +30,12 @@ func AddUser(c *gin.Context) {
 // Get all users
 func FindUsers(c *gin.Context) {
 	var users []models.User
-	models.DB.Find(&users)
+	result := models.DB.Find(&users)
+
+	if result.RowsAffected == 0 {
+		c.JSON(http.StatusOK, helpers.NoResults())
+		return
+	}
 
 	c.JSON(http.StatusOK, gin.H{"data": helpers.Results{
 		Count:   len(users),
@@ -42,9 +47,9 @@ func FindUsers(c *gin.Context) {
 // Get a user by id
 func FindUser(c *gin.Context) {
 	var user models.User
-	models.DB.First(&user, c.Param("id"))
+	result := models.DB.First(&user, c.Param("id"))
 
-	if user.ID == 0 {
+	if result.RowsAffected == 0 {
 		c.JSON(http.StatusOK, helpers.NoResults())
 		return
 	}
@@ -64,6 +69,8 @@ func EditUser(c *gin.Context) {
 
 	result := models.DB.Save(&user)
 
+	// Patch does not care whether rows rows were affected or not.
+
 	if result.Error != nil {
 		c.JSON(http.StatusBadRequest, helpers.BadRequest())
 		return
@@ -82,9 +89,9 @@ func DeleteUser(c *gin.Context) {
 		ID: helpers.GrabIDParamAndConvertToUInt(c),
 	}
 
-	models.DB.First(&user)
+	result := models.DB.First(&user)
 
-	if user.Nickname == "" {
+	if result.RowsAffected == 0 {
 		c.JSON(http.StatusOK, helpers.NoResults())
 		return
 	}
