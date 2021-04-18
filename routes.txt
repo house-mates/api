@@ -20,13 +20,15 @@ actions/:id PATCH - json body
 actions/:id DELETE
 actions_by_uid/:user_id DELETE
 
-events/create - json body
-events/read
-events/read/:id
-events/read/{action_id}
-events/read/range - json body
-events/update/:id - json body
-events/delete/:id
+events POST - json body
+events GET
+events/:id GET
+events_by_aid/:action_id GET
+events_by_range GET - json body
+events_by_range_and_aid/:action_id GET - json body
+events/:id PATCH - json body
+events/:id DELETE
+events_by_aid/:action_id DELETE
 
 responses/create - json body
 responses/read

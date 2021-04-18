@@ -129,16 +129,19 @@ func DeleteUsermeta(c *gin.Context) {
 // DELETE /usermeta_by_uid/:user_id
 // Delete usermeta by user id
 func DeleteUsermetaByUserID(c *gin.Context) {
-	var usermeta = []models.Usermeta{}
+	var (
+		userID   = c.Param("user_id")
+		usermeta = []models.Usermeta{}
+	)
 
-	result := models.DB.Find(&usermeta, "user_id = ?", c.Param("user_id"))
+	result := models.DB.Find(&usermeta, "user_id = ?", userID)
 
 	if result.RowsAffected == 0 {
 		c.JSON(http.StatusOK, helpers.NoResults())
 		return
 	}
 
-	models.DB.Exec("DELETE FROM usermeta WHERE user_id = ?", c.Param("user_id"))
+	models.DB.Exec("DELETE FROM usermeta WHERE user_id = ?", userID)
 
 	c.JSON(http.StatusOK, gin.H{"data": helpers.Results{
 		Count:   len(usermeta),

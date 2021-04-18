@@ -14,14 +14,14 @@ func AddAction(c *gin.Context) {
 	var action = models.Action{}.MapRequestToAction(c)
 
 	var user models.User
-	models.DB.First(&user, action.CreatedBy)
+	result := models.DB.First(&user, action.CreatedBy)
 
-	if user.ID == 0 {
+	if result.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"data": "created_by is not a valid user id"})
 		return
 	}
 
-	result := models.DB.Create(&action)
+	result = models.DB.Create(&action)
 
 	if result.Error != nil {
 		c.JSON(http.StatusBadRequest, helpers.BadRequest())
@@ -136,16 +136,19 @@ func DeleteAction(c *gin.Context) {
 // DELETE /actions_by_uid/:user_id
 // Delete actions by user id
 func DeleteActionsByUserID(c *gin.Context) {
-	var action = []models.Action{}
+	var (
+		userID = c.Param("user_id")
+		action = []models.Action{}
+	)
 
-	result := models.DB.Find(&action, "created_by = ?", c.Param("user_id"))
+	result := models.DB.Find(&action, "created_by = ?", userID)
 
 	if result.RowsAffected == 0 {
 		c.JSON(http.StatusOK, helpers.NoResults())
 		return
 	}
 
-	models.DB.Exec("DELETE FROM actions WHERE created_by = ?", c.Param("user_id"))
+	models.DB.Exec("DELETE FROM actions WHERE created_by = ?", userID)
 
 	c.JSON(http.StatusOK, gin.H{"data": helpers.Results{
 		Count:   len(action),

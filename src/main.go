@@ -34,5 +34,15 @@ func main() {
 	r.DELETE("/actions/:id", controllers.DeleteAction)
 	r.DELETE("/actions_by_uid/:user_id", controllers.DeleteActionsByUserID)
 
+	r.POST("/events", controllers.AddEvent)
+	r.GET("/events", controllers.FindEvents)
+	r.GET("/events/:id", controllers.FindEvent)
+	r.GET("/events_by_aid/:action_id", controllers.FindEventsByActionID)
+	r.GET("/events_by_range", controllers.FindEventsByTimeRange)
+	r.GET("/events_by_range_and_aid/:action_id", controllers.FindEventsByTimeRangeAndActionID)
+	r.PATCH("/events/:id", controllers.EditEvent)
+	r.DELETE("/events/:id", controllers.DeleteEvent)
+	r.DELETE("/events_by_aid/:action_id", controllers.DeleteEventsByActionID)
+
 	r.Run()
 }
