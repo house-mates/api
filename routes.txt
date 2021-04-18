@@ -30,11 +30,11 @@ events/:id PATCH - json body
 events/:id DELETE
 events_by_aid/:action_id DELETE
 
-responses/create - json body
-responses/read
-responses/read/:id
-responses/read/{event_id}
-responses/read/{user_id}
-responses/delete/:id
-responses/delete/{event_id}
-responses/delete/{user_id}
+responses POST - json body
+responses GET
+responses/:id GET
+responses_by_eid/:event_id GET
+responses_by_uid/:user_id GET
+responses/:id DELETE
+responses_by_eid/:event_id DELETE
+responses_by_uid/:user_id DELETE

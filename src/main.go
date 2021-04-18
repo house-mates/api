@@ -44,5 +44,14 @@ func main() {
 	r.DELETE("/events/:id", controllers.DeleteEvent)
 	r.DELETE("/events_by_aid/:action_id", controllers.DeleteEventsByActionID)
 
+	r.POST("/responses", controllers.AddResponse)
+	r.GET("/responses", controllers.FindResponses)
+	r.GET("/responses/:id", controllers.FindResponse)
+	r.GET("/responses_by_eid/:event_id", controllers.FindResponsesByEventID)
+	r.GET("/responses_by_uid/:user_id", controllers.FindResponsesByUserID)
+	r.DELETE("/responses/:id", controllers.DeleteResponse)
+	r.DELETE("/responses_by_eid/:event_id", controllers.DeleteResponsesByEventID)
+	r.DELETE("/responses_by_uid/:user_id", controllers.DeleteResponsesByUserID)
+
 	r.Run()
 }
