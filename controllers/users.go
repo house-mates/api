@@ -4,8 +4,8 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/house-mates/api/src/helpers"
-	"github.com/house-mates/api/src/models"
+	"github.com/house-mates/api/helpers"
+	"github.com/house-mates/api/models"
 )
 
 // POST /users

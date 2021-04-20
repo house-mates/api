@@ -3,8 +3,8 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 
-	"github.com/house-mates/api/src/controllers"
-	"github.com/house-mates/api/src/models"
+	"github.com/house-mates/api/controllers"
+	"github.com/house-mates/api/models"
 )
 
 func main() {
