@@ -14,5 +14,12 @@ services:
       - ${PWD}
       - '../schema:/tmp/schema'
 
-networks:
-  website:
+  # go:
+  #   container_name: ${APP_NAME:?err}-go
+  #   build:
+  #     context: ./
+  #     dockerfile: go.Dockerfile
+  #   volumes:
+  #     - "..:/go/src/housemates"
+  #   working_dir: "/go/src/housemates"
+  #   command: go run main.go

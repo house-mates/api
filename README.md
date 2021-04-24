@@ -1,5 +1,7 @@
 ### API
 
+Built with [Gin](https://github.com/gin-gonic/gin).
+
 <br>
 
 ### Routes
@@ -59,3 +61,9 @@ Responses<br>
 
 Events and Actions<br>
 ![Events and Actions](schema/events.png)
+
+
+<br>
+
+### Steps to production
+- Uncomment main.go:13 to put gin in release mode

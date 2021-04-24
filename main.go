@@ -10,6 +10,8 @@ import (
 func main() {
 	r := gin.Default()
 
+	// gin.SetMode(gin.ReleaseMode)
+
 	models.ConnectDataBase()
 
 	r.POST("/users", controllers.AddUser)
